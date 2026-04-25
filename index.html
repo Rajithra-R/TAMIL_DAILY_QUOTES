@@ -3,23 +3,113 @@
 <head>
     <title>Raji Tamil Quotes</title>
     <meta charset="UTF-8">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #fff1eb, #ace0f9);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            padding: 30px;
+            background: #ff758c;
+            color: white;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .quote-box {
+            background: white;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 60%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .latest {
+            border: 3px solid #ff758c;
+        }
+
+        .date {
+            color: gray;
+            font-size: 14px;
+        }
+
+        .category {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 10px;
+            background: #333;
+            color: white;
+        }
+    </style>
 </head>
-<body style="text-align:center; font-family:sans-serif; background-color:#fffaf0;">
 
+<body>
+
+<header>
     <h1>🌸 தினசரி தமிழ் மேற்கோள்கள்</h1>
-    <h3>✍️ By Raji</h3>
+    <p>✍️ By Raji</p>
+</header>
 
-    <hr>
+<div class="container">
 
     <h2>✨ இன்று மேற்கோள்</h2>
+    <div id="latestQuote" class="quote-box latest"></div>
 
-    <p style="font-size:20px; margin:20px;">
-        "எழுத மறந்த கதையில் நான் தினமும் ரசிக்கும் ஒரு பக்கம் நீ !!!"
-    </p>
+    <h2>📚 அனைத்து மேற்கோள்கள்</h2>
+    <div id="allQuotes"></div>
 
-    <hr>
+</div>
 
-    <p>📚 மேலும் மேற்கோள்களுக்கு GitHub repository-ஐ பாருங்கள்</p>
+<footer>
+    Made with ❤️ in Tamil
+</footer>
+
+<script>
+fetch('quotes.json')
+.then(response => response.json())
+.then(data => {
+
+    // Latest Quote
+    let latest = data[0];
+    document.getElementById("latestQuote").innerHTML = `
+        <p>${latest.quote}</p>
+        <div class="date">${latest.date}</div>
+        <div class="category">${latest.category}</div>
+    `;
+
+    // All Quotes
+    let allQuotesHTML = "";
+    data.forEach(q => {
+        allQuotesHTML += `
+            <div class="quote-box">
+                <p>${q.quote}</p>
+                <div class="date">${q.date}</div>
+                <div class="category">${q.category}</div>
+            </div>
+        `;
+    });
+
+    document.getElementById("allQuotes").innerHTML = allQuotesHTML;
+
+});
+</script>
 
 </body>
 </html>
